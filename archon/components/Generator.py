@@ -6,6 +6,7 @@ from utils import (
     generate_google,
     generate_tgi,
     generate_bedrock,
+    generate_reka,
     vllmWrapper,
     clean_messages,
 )
@@ -20,6 +21,7 @@ GENERATE_MAP = {
     "Google_API": generate_google,
     "tgi": generate_tgi,
     "Bedrock_API": generate_bedrock,
+    "Reka_API": generate_reka,
 }
 
 

@@ -18,6 +18,7 @@ def evaluate_pass(answers: list):
             response_answer_section = response_dict["output"].split("answer is:")[1].strip()
             
             if ground_truth_answer in response_answer_section:
+
                 corrects.append(True)
             else:
                 corrects.append(False)
@@ -52,7 +53,7 @@ def evaluate_math_answers(answers_json_path: str):
     overall_problematic = None
 
     if len(answers) != 0 and isinstance(answers[0], list):
-        for answers_pass in answers:
+        for i, answers_pass in enumerate(answers):
             corrects, problematic_queries = evaluate_pass(answers_pass)
 
             if overall_corrects is None:
@@ -67,6 +68,10 @@ def evaluate_math_answers(answers_json_path: str):
         overall_corrects, overall_problematic = evaluate_pass(answers)
 
     evaluation_results = {}
+    correct_indexes = np.where(overall_corrects)[0]
+    evaluation_results["correct_indexes"] = correct_indexes.tolist()
+    print("Correct answer indexes:", correct_indexes)
+
     evaluation_results["accuracy"] = np.mean(overall_corrects)
     num_problematic = np.sum(overall_problematic)
 

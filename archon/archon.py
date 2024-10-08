@@ -238,6 +238,7 @@ class Archon:
             name (str): Name of generator, must match name in archon config
             generator (): generator function to be called from a generator
         """
+        print(f"Adding generator: {name}")
         self.custom_generators[name] = generator
 
     def initialize(self):

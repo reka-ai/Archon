@@ -10,6 +10,7 @@ import google.generativeai as google_genai
 import json
 import random
 from litellm import completion
+from reka.client import Reka
 
 DEBUG = int(os.environ.get("DEBUG", "0"))
 DEBUG_VERIFIER = int(os.environ.get("DEBUG_VERIFIER", 0))
@@ -528,3 +529,17 @@ def generate_bedrock(
         return None
 
     return output.strip()
+
+
+def generate_reka(model, messages, max_tokens=2048, temperature=0.4, top_k=1, **kwargs):
+    client = Reka(
+        api_key=KEYS.get_current_key("REKA_API_KEY")
+    )
+    response = client.chat.create(
+        messages=messages,
+        model=model,
+        max_tokens=max_tokens,
+        temperature=temperature,
+        top_k=top_k,
+    )
+    return response.responses[0].message.content

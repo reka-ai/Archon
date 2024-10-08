@@ -1,0 +1,52 @@
+{
+    "name": "archon-reka-flash-sample_10_then_rank_top_5_then_critic_then_fuse",
+    "layers": [
+        [
+            {
+                "type": "generator",
+                "model": "reka-flash",
+                "model_type": "Reka_API",
+                "top_k": 1,
+                "temperature": 0.4,
+                "max_tokens": 2048,
+                "samples": 10,
+                "no_system": true
+            }
+        ],
+        [
+            {
+                "type": "ranker",
+                "model": "reka-flash",
+                "ranker_batch_size": 16,
+                "model_type": "Reka_API",
+                "top_k": 5,
+                "temperature": 0.4,
+                "max_tokens": 2048,
+                "use_critiques": false,
+                "no_system": true
+            }
+        ],
+        [
+            {
+                "type": "critic",
+                "model": "reka-flash",
+                "model_type": "Reka_API",
+                "temperature": 0.4,
+                "max_tokens": 2048,
+                "samples": 1,
+                "no_system": true
+            }
+        ],
+        [
+            {
+                "type": "fuser",
+                "model": "reka-flash",
+                "model_type": "Reka_API",
+                "temperature": 0.4,
+                "max_tokens": 2048,
+                "samples": 1,
+                "no_system": true
+            }
+        ]
+    ]
+}
